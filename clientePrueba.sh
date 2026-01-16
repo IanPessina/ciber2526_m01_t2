@@ -48,7 +48,6 @@ then
 
 fi
 
-
 echo "6. SEND. Nombre de archivo"
 
 sleep 1
