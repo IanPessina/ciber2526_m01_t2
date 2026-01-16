@@ -1,10 +1,10 @@
 #!/bin/bash
 
-echo "Server RECTP_0.5"
+echo "Server RECTP_0.9"
 
 PORT=9999
 
-ACTUAL_VERSION="0.6"
+ACTUAL_VERSION="0.9"
 
 ACTUAL_HEADER="RECTP"
 
@@ -113,6 +113,18 @@ FILE_HASH_TEST=$(echo "$FILE_NAME" | md5sum | cut -d " " -f 1)
 
     sleep 1
     echo "FILE_DATA_OK" | nc $IP_CLIENT -q 0 $PORT
+
+    echo "LISTEN. FILE_DATA_HASH"
+
+    DATA=$(nc -l -p $PORT)
+
+    FILE_DATA_HASH=$(cat $FILE_NAME | md5sum | cut -d " " -f 1)
+
+    if [ "$FILE_DATA_HASH" != "$DATA" ]
+    then
+		echo "Erro: Contenido del archivo corrupto."
+		exit 1
+    fi
 
     echo "ACABADO CORRECTAMENTE!"
 

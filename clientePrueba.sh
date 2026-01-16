@@ -1,15 +1,17 @@
+
+
 #!/bin/bash
 
 
 PORT=9999
 
-ACTUAL_VERSION="0.6"
+ACTUAL_VERSION="0.9"
 
 SERVER_IP="192.168.225.141"
 
 FILE_NAME="audio.wav"
 
-echo "Cliente del protocolo RECTP v0.6"
+echo "Cliente del protocolo RECTP v0.9"
 
 echo "1. SEND. Enviamos la cabecera al servidor"
 
@@ -73,13 +75,13 @@ fi
 echo "11. SEND. FILE DATA"
 
 sleep 1
-cat audio.wav | nc $SERVER_IP -q 0 $PORT
+cat $FILE_NAME | nc $SERVER_IP -q 0 $PORT
 
 echo "12. LISTEN"
 
 RESPONSE=$(nc -l -p $PORT)
 
-echo "15. TEST. FILE_DATA_OK"
+echo "16. TEST. FILE_DATA_OK"
 
 if [ "$RESPONSE" != "FILE_DATA_OK" ]
 then
@@ -87,6 +89,12 @@ then
 
 	exit 3
 fi
+
+echo "17. SEND. FILR_DATA_HASH"
+
+FILE_DATA_HASH=$(cat $FILE_NAME | md5sum | cut -d " " -f 1)
+
+echo $FILE_DATA_HASH | nc $SERVER_IP -q 0 $PORT
 
 echo "TODO LISTO!"
 
