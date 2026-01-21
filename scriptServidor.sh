@@ -122,11 +122,15 @@ FILE_HASH_TEST=$(echo "$FILE_NAME" | md5sum | cut -d " " -f 1)
 
     if [ "$FILE_DATA_HASH" != "$DATA" ]
     then
-		echo "Erro: Contenido del archivo corrupto."
+		echo "SEND. FILE_DATA_HASH_KO"
 		exit 1
     fi
 
-    echo "ACABADO CORRECTAMENTE!"
+    echo "SEND. FILE_DATA_HASH_OK"
 
+    echo "FILE_DATA_HASH_OK"  | nc $IP_CLIENT -q 0 $PORT
+
+    echo "TODO LISTO!"
+    
     exit 0
     

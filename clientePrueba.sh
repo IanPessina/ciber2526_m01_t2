@@ -90,11 +90,18 @@ then
 	exit 3
 fi
 
-echo "17. SEND. FILR_DATA_HASH"
+echo "17. SEND. FILE_DATA_HASH"
 
 FILE_DATA_HASH=$(cat $FILE_NAME | md5sum | cut -d " " -f 1)
 
 echo $FILE_DATA_HASH | nc $SERVER_IP -q 0 $PORT
+
+RESPONSE=$(nc -l -p $PORT)
+
+if [ "$RESPONSE" != "FILE_DATA_HASH_OK" ]
+	echo "ERROR: File Data Hash incorrect."
+	exit 4
+fi
 
 echo "TODO LISTO!"
 
