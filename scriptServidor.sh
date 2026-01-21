@@ -123,6 +123,7 @@ FILE_HASH_TEST=$(echo "$FILE_NAME" | md5sum | cut -d " " -f 1)
     if [ "$FILE_DATA_HASH" != "$DATA" ]
     then
 		echo "SEND. FILE_DATA_HASH_KO"
+		echo "FILE_DATA_HASH_KO" | nc $IP_CLIENT -q 0 $PORT
 		exit 1
     fi
 
@@ -133,4 +134,5 @@ FILE_HASH_TEST=$(echo "$FILE_NAME" | md5sum | cut -d " " -f 1)
     echo "TODO LISTO!"
     
     exit 0
+   
     

@@ -7,7 +7,7 @@ PORT=9999
 
 ACTUAL_VERSION="0.9"
 
-SERVER_IP="192.168.225.141"
+SERVER_IP="192.168.1.17"
 
 FILE_NAME="audio.wav"
 
@@ -99,6 +99,7 @@ echo $FILE_DATA_HASH | nc $SERVER_IP -q 0 $PORT
 RESPONSE=$(nc -l -p $PORT)
 
 if [ "$RESPONSE" != "FILE_DATA_HASH_OK" ]
+then
 	echo "ERROR: File Data Hash incorrect."
 	exit 4
 fi
