@@ -2,14 +2,26 @@
 
 #!/bin/bash
 
+if [ $# -lt 1 ]
+then
+	echo "ERROR 255: Numero de parámetros insuficiente."
+	echo "Sintaxis:"
+	echo -e "\t$0 IP_SERVER"
+	echo "Ejemplo de uso:"
+	echo -e "\t$0 localhost"
+	echo -e "\t$0 192.168.1.33"	
+	exit 255
+fi
 
 PORT=9999
 
 ACTUAL_VERSION="0.9"
 
-SERVER_IP="192.168.1.17"
+SERVER_IP="$1"
 
 FILE_NAME="audio.wav"
+
+clear
 
 echo "Cliente del protocolo RECTP v0.9"
 
