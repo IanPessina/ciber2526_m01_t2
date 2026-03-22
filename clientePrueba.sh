@@ -22,7 +22,7 @@ SERVER_IP="$1"
 FILE_NAME="audio.wav"
 
 clear
-
+	
 echo "Cliente del protocolo RECTP v0.9"
 
 echo "1. SEND. Enviamos la cabecera al servidor"
@@ -34,7 +34,14 @@ IP_LOCAL=$(ip -4 a | grep "scope global" | awk '{print $2}' | cut -d "/" -f1)
 HASH=$(echo "$IP_LOCAL" | md5sum | cut -d " " -f 1)
 
 sleep 1
+
 echo "RECTP $ACTUAL_VERSION $IP_LOCAL $HASH" | nc $SERVER_IP -q 0 $PORT
+
+if [ $? != 0 ]
+then
+	echo "Error 1a: No nos hemos podido conectar"
+	exit 37
+fi
 
 echo "2. LISTEN"
 
@@ -115,6 +122,13 @@ then
 	echo "ERROR: File Data Hash incorrect."
 	exit 4
 fi
+
+echo "20. SEND. MESSAGE"
+
+USER_NAME="enti"
+DOMAIN="domain.mail"
+
+echo "Comunicación realizada correctamente" | mail -s "COMUNICACIÓN FINALIZADA" $USER_NAME@$DOMAIN
 
 echo "TODO LISTO!"
 
